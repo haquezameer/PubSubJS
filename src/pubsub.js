@@ -134,6 +134,21 @@
         return true;
     }
 
+    function getSubscribers(message) {
+        var topic = String( message );
+        var subscribers = messages[message];
+        var subscribersKeys = Object.keys(subscribers);
+        const subscribersArr =subscribersKeys.map(sub => {
+            // console.log(subscribers[sub].name);
+            return subscribers[sub].name;
+        });
+        return subscribersArr;
+    }
+
+    PubSub.getSubscribers = function(message) {
+        return getSubscribers(message);
+    }
+
     /**
      * Publishes the message, passing the data to it's subscribers
      * @function
@@ -182,7 +197,7 @@
         // and allow for easy use as key names for the 'messages' object
         var token = 'uid_' + String(++lastUid);
         messages[message][token] = func;
-        
+
         // return token for unsubscribing
         return token;
     };
